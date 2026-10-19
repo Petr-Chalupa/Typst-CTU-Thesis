@@ -104,7 +104,7 @@
   page(margin: 2.5cm, numbering: none)[
     #align(center)[
       #if logo != none [
-        #image(logo, width: 3.5cm)
+        #logo
       ]
       #text(size: 16pt, weight: "bold")[
         #tr.university

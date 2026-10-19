@@ -1,8 +1,8 @@
 [package]
-name = "ctu-thesis"
+name = "simple-ctu-thesis"
 version = "0.1.0"
 entrypoint = "lib.typ"
-authors = ["Petr Chalupa <https://chalupapetr.cz/>"]
+authors = ["Petr Chalupa <https://chalupapetr.cz>"]
 license = "MIT"
 description = "Thesis template for CTU in Prague."
 repository = "https://github.com/Petr-Chalupa/Typst-CTU-Thesis"
