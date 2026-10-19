@@ -1,5 +1,10 @@
 # Typst CTU Thesis
 
-Typst thesis template for the Czech Technical University in Prague.
+A Typst template for academic reports and theses at the Czech Technical University in Prague (CTU).
 
-The package name is `ctu-thesis`. Its Typst entry point is `lib.typ`.
+The template is intended for:
+- Semester projects
+- Bachelor's theses
+- Master's theses
+
+Simple and reusable starting point for writing academic documents in Typst.
