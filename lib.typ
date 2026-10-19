@@ -106,7 +106,6 @@
       #if logo != none [
         #image(logo, width: 3.5cm)
       ]
-
       #text(size: 16pt, weight: "bold")[
         #tr.university
       ]
@@ -118,9 +117,7 @@
       #text(size: 22pt, weight: "bold")[
         #thesis-type
       ]
-
       #v(0.5em)
-
       #text(size: 16pt)[
         #title
       ]
@@ -129,12 +126,12 @@
     #v(2cm)
 
     #align(center)[
-      #author
-
-      #v(0.5em)
-
-      #if study-program != "" [
-        #study-program
+      #text(size: 14pt)[
+        #author
+        #v(0.5em)
+        #if study-program != "" [
+          #study-program
+        ]
       ]
     ]
 
