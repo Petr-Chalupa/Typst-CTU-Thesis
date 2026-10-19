@@ -1,0 +1,15 @@
+[package]
+name = "ctu-thesis"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Petr Chalupa <https://chalupapetr.cz/>"]
+license = "MIT"
+description = "Thesis template for CTU in Prague."
+repository = "https://github.com/Petr-Chalupa/?"
+keywords = ["ctu", "thesis", "university", "fel"]
+categories = ["thesis"]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "thumbnail.png"
