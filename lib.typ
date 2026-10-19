@@ -93,39 +93,15 @@
   )
 
   set heading(numbering: "1.")
-
-  show heading.where(level: 1): set text(
-    size: 1.65em,
-    weight: "bold",
-  )
-  show heading.where(level: 1): set block(
-    above: 1.2em,
-    below: 1em,
-  )
-
-  show heading.where(level: 2): set text(
-    size: 1.3em,
-    weight: "bold",
-  )
-  show heading.where(level: 2): set block(
-    above: 0.8em,
-    below: 0.6em,
-  )
-
-  show heading.where(level: 3): set text(
-    size: 1.1em,
-    weight: "bold",
-  )
-  show heading.where(level: 3): set block(
-    above: 0.5em,
-    below: 0.4em,
-  )
+  show heading.where(level: 1): set text(size: 1.65em, weight: "bold")
+  show heading.where(level: 1): set block(above: 1.2em, below: 1em)
+  show heading.where(level: 2): set text(size: 1.3em, weight: "bold")
+  show heading.where(level: 2): set block(above: 0.8em, below: 0.6em)
+  show heading.where(level: 3): set text(size: 1.1em, weight: "bold")
+  show heading.where(level: 3): set block(above: 0.5em, below: 0.4em)
 
   // Title page
-  page(
-    margin: 2.5cm,
-    numbering: none,
-  )[
+  page(margin: 2.5cm, numbering: none)[
     #align(center)[
       #if logo != none [
         #image(logo, width: 3.5cm)
@@ -172,7 +148,6 @@
           #text(weight: "bold")[
             #tr.supervisors
           ]
-
           #for supervisor in supervisors [
             #linebreak()
             #supervisor
@@ -281,7 +256,8 @@
   // Appendicies
   if appendices != none {
     pagebreak()
-    heading(level: 1, numbering: none)[#tr.appendices]
+    set heading(numbering: none)
+    heading(level: 1)[#tr.appendices]
     appendices
   }
 }
