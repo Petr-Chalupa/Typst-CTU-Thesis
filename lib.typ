@@ -90,15 +90,17 @@
   set par(
     justify: true,
     leading: 0.65em,
+    spacing: 0.65em,
+    first-line-indent: 1.5em,
   )
 
   set heading(numbering: "1.")
   show heading.where(level: 1): set text(size: 1.65em, weight: "bold")
-  show heading.where(level: 1): set block(above: 1.2em, below: 1em)
+  show heading.where(level: 1): set block(above: 1.75em, below: 0.75em)
   show heading.where(level: 2): set text(size: 1.3em, weight: "bold")
-  show heading.where(level: 2): set block(above: 0.8em, below: 0.6em)
+  show heading.where(level: 2): set block(above: 1.5em, below: 0.75em)
   show heading.where(level: 3): set text(size: 1.1em, weight: "bold")
-  show heading.where(level: 3): set block(above: 0.5em, below: 0.4em)
+  show heading.where(level: 3): set block(above: 1.25em, below: 0.5em)
 
   // Title page
   page(margin: 2.5cm, numbering: none)[
