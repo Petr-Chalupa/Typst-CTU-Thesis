@@ -254,11 +254,14 @@
     )
   }
 
-  // Appendicies
+  // Appendices
   if appendices != none {
     pagebreak()
-    set heading(numbering: none)
-    heading(level: 1)[#tr.appendices]
-    appendices
+    heading(level: 1, numbering: none)[#tr.appendices]
+    [
+      #counter(heading).update(0)
+      #set heading(numbering: "A.1")
+      #appendices
+    ]
   }
 }
