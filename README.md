@@ -23,6 +23,8 @@ The template exposes the function `thesis()`.
 - `thesis-type`: type of thesis or assignment shown on the title page
 - `title`: document title
 - `author`: author name
+- `faculty`: faculty name shown on the title page
+- `department`: optional department name shown on the title page
 - `study-program`: optional study program shown under the author
 - `supervisors`: list of supervisors shown on the title page
 - `logo`: optional image to display on the title page

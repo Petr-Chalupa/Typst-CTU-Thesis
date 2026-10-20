@@ -30,9 +30,11 @@
 #let thesis(
   language: "en",
 
-  thesis-type: "Semestrální práce",
-  title: "Název práce",
-  author: "Jméno Příjmení",
+  thesis-type: "Thesis type",
+  title: "Title",
+  author: "Name of the author",
+  faculty: "Faculty",
+  department: "",
   study-program: "",
   supervisors: (),
   logo: none,
@@ -108,32 +110,32 @@
       #if logo != none [
         #logo
       ]
-      #text(size: 16pt, weight: "bold")[
-        #tr.university
+      #text(size: 16pt, weight: "bold")[#tr.university]
+      #if faculty != "" [
+        #v(0.4em)
+        #text(size: 14pt, weight: "bold")[#faculty]
+      ]
+      #if department != "" [
+        #v(0.3em)
+        #text(size: 12pt)[#department]
       ]
     ]
 
     #v(3cm)
 
     #align(center)[
-      #text(size: 22pt, weight: "bold")[
-        #thesis-type
-      ]
+      #text(size: 16pt, weight: "bold")[#thesis-type]
       #v(0.5em)
-      #text(size: 16pt)[
-        #title
-      ]
+      #text(size: 20pt, weight: "bold")[#title]
     ]
 
     #v(2cm)
 
     #align(center)[
-      #text(size: 14pt)[
-        #author
+      #text(size: 16pt)[#author]
+      #if study-program != "" [
         #v(0.5em)
-        #if study-program != "" [
-          #study-program
-        ]
+        #text(size: 12pt)[#study-program]
       ]
     ]
 
