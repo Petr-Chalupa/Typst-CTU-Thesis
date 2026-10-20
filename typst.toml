@@ -6,7 +6,7 @@ authors = ["Petr Chalupa <https://chalupapetr.cz>"]
 license = "MIT"
 description = "Thesis template for CTU in Prague."
 repository = "https://github.com/Petr-Chalupa/Typst-CTU-Thesis"
-keywords = ["ctu", "thesis", "university", "fel"]
+keywords = ["ctu", "čvut", "thesis", "university", "paper", "fel"]
 categories = ["thesis"]
 
 [template]
