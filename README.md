@@ -2,9 +2,9 @@
 
 A Typst template for academic theses and reports at the Czech Technical University in Prague (CTU).
 
-The template is intended for semester projects, bachelor's theses, master's theses and similar assignments.
+It is meant for semester projects, bachelor's theses, master's theses and similar assignments. The template was written with the [FEE CTU regulations](https://intranet.fel.cvut.cz/cz/rozvoj/smerniceSZZ.pdf) in mind and follows the thesis structure described.
 
-It includes the standard sections and formatting required by the [CTU regulations](https://intranet.fel.cvut.cz/cz/rozvoj/smerniceSZZ.pdf).
+> This is an unofficial template. Check requirements of your faculty and/or supervisor(s) for your own thesis.
 
 ---
 
@@ -14,34 +14,33 @@ See the template document in [template/main.typ](./template/main.typ).
 
 ---
 
-### API
+### Parameters
+ 
+`thesis()`:
 
-The template exposes the function `thesis()`.
+| Parameter                    | Type                                 | Notes                                                                                                                    |
+| ---------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `language`                   | `"en"` or `"cs"`                     |                                                                                                                          |
+| `thesis-type`                | `str`, `content`                     |                                                                                                                          |
+| `title`                      | `str`, `content`                     |                                                                                                                          |
+| `author`                     | `str`, `content`                     |                                                                                                                          |
+| `faculty`                    | `str`, `content`                     |                                                                                                                          |
+| `department`                 | `str`, `content`                     |                                                                                                                          |
+| `study-program`              | `str`, `content`                     |                                                                                                                          |
+| `supervisors`                | `array` of `str`                     |                                                                                                                          |
+| `logo`                       | `content`                            | Image on the title page                                                                                                  |
+| `date`                       | `auto`, `datetime`, `str`, `content` | `auto` is today. A `datetime` is shown as "Month Year" in the document language. A `str`/`content` is shown as provided. |
+| `abstract-cs`, `abstract-en` | `str`, `content`                     |                                                                                                                          |
+| `keywords-cs`, `keywords-en` | `array` of `str`                     |                                                                                                                          |
+| `acknowledgements`           | `str`, `content`                     |                                                                                                                          |
+| `assignment`                 | `content`                            |                                                                                                                          |
+| `declaration`                | `content`                            |                                                                                                                          |
+| `list-of-figures`            | `bool`                               |                                                                                                                          |
+| `list-of-tables`             | `bool`                               |                                                                                                                          |
+| `list-of-abbreviations`      | `array` of pairs                     | E.g. `(("CTU", "Czech Technical University"),)`                                                                          |
+| `bibliography`               | `content`                            | A bibliography element, e.g. `bibliography("refs.bib")`. Pass `style:` to it if you do not want the default style        |
+| `appendices`                 | `content`                            | Heading numbering format is `A.1`                                                                                        |
+| `body`                       | `content`                            | Main document content                                                                                                    |
 
-`thesis()` parameters:
-- `language`: document language, either `"en"` or `"cs"`
-- `thesis-type`: type of thesis or assignment shown on the title page
-- `title`: document title
-- `author`: author name
-- `faculty`: faculty name shown on the title page
-- `department`: optional department name shown on the title page
-- `study-program`: optional study program shown under the author
-- `supervisors`: list of supervisors shown on the title page
-- `logo`: optional image to display on the title page
-- `date`: date displayed on the title page
-- `abstract-cs`: Czech abstract content
-- `keywords-cs`: Czech keywords
-- `abstract-en`: English abstract content
-- `keywords-en`: English keywords
-- `acknowledgements`: optional acknowledgements section content
-- `assignment`: optional assignment page content
-- `declaration`: optional declaration page content
-- `list-of-figures`: whether to include a list of figures
-- `list-of-tables`: whether to include a list of tables
-- `list-of-abbreviations`: list of abbreviation pairs, e.g. `(("CTU", "Czech Technical University"), ...)`
-- `bibliography-file`: BibTeX/Bibliography file for references
-- `bibliography-style`: bibliography style used by Typst, such as `"ieee"`
-- `appendices`: content for the appendices section
-- `body`: main document content
-
-*Some parameters are optional and use default values; they can be omitted if not needed.*
+\
+*Optional parameters can be omitted or set to none, where applicable.*
