@@ -1,6 +1,11 @@
+// ---------------------------------------------------------------------------
+// Localization
+// ---------------------------------------------------------------------------
+
 #let translations = (
   cs: (
     university: "ČESKÉ VYSOKÉ UČENÍ TECHNICKÉ V PRAZE",
+    supervisor: "Vedoucí práce",
     supervisors: "Vedoucí práce",
     abstract: "Abstrakt",
     keywords: "Klíčová slova",
@@ -10,10 +15,24 @@
     list-of-tables: "Seznam tabulek",
     list-of-abbreviations: "Seznam zkratek",
     bibliography: "Literatura",
-    appendices: "Přílohy",
+    months: (
+      "leden",
+      "únor",
+      "březen",
+      "duben",
+      "květen",
+      "červen",
+      "červenec",
+      "srpen",
+      "září",
+      "říjen",
+      "listopad",
+      "prosinec",
+    ),
   ),
   en: (
     university: "CZECH TECHNICAL UNIVERSITY IN PRAGUE",
+    supervisor: "Supervisor",
     supervisors: "Supervisors",
     abstract: "Abstract",
     keywords: "Keywords",
@@ -23,9 +42,52 @@
     list-of-tables: "List of Tables",
     list-of-abbreviations: "List of Abbreviations",
     bibliography: "References",
-    appendices: "Appendices",
+    months: (
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ),
   ),
 )
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+#let _present(x) = x != none and x != "" and x != []
+
+#let _chapters(style, body) = {
+  set heading(numbering: style)
+  set figure(numbering: n => numbering(style, counter(heading).get().first(), n))
+  show heading.where(level: 1): it => {
+    pagebreak(weak: true)
+    for kind in (image, table, raw) { counter(figure.where(kind: kind)).update(0) }
+    it
+  }
+  body
+}
+
+#let _format-date(date, tr) = {
+  if date == auto { date = datetime.today() }
+  if type(date) == datetime {
+    tr.months.at(date.month() - 1) + " " + str(date.year())
+  } else {
+    date
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Template
+// ---------------------------------------------------------------------------
 
 #let thesis(
   language: "en",
@@ -33,19 +95,19 @@
   thesis-type: "Thesis type",
   title: "Title",
   author: "Name of the author",
-  faculty: "Faculty",
-  department: "",
-  study-program: "",
+  faculty: none,
+  department: none,
+  study-program: none,
   supervisors: (),
   logo: none,
-  date: datetime.today().display("[month repr:long] [year]"),
+  date: auto,
 
   abstract-cs: [],
   keywords-cs: (),
   abstract-en: [],
   keywords-en: (),
 
-  acknowledgements: "",
+  acknowledgements: none,
 
   assignment: none,
   declaration: none,
@@ -53,14 +115,13 @@
   list-of-figures: false,
   list-of-tables: false,
   list-of-abbreviations: (),
-  bibliography-file: none,
-  bibliography-style: "ieee",
+  bibliography: none,
   appendices: none,
 
   body,
 ) = {
-  let lang = if language == "cs" { "cs" } else { "en" }
-  let tr = translations.at(lang)
+  assert(language in ("cs", "en"), message: "`language` must be \"cs\" or \"en\"")
+  let tr = translations.at(language)
 
   // Metadata
   set document(
@@ -78,15 +139,13 @@
       top: 3cm,
       bottom: 3.5cm,
     ),
-    binding: auto,
-    numbering: "1",
   )
 
   set text(
     font: "Libertinus Serif",
     size: 11pt,
-    lang: lang,
-    region: if lang == "cs" { "cz" } else { "us" },
+    lang: language,
+    region: if language == "cs" { "CZ" } else { "US" },
   )
 
   set par(
@@ -96,7 +155,6 @@
     first-line-indent: 1.5em,
   )
 
-  set heading(numbering: "1.")
   show heading.where(level: 1): set text(size: 1.65em, weight: "bold")
   show heading.where(level: 1): set block(above: 1.75em, below: 0.75em)
   show heading.where(level: 2): set text(size: 1.3em, weight: "bold")
@@ -105,17 +163,19 @@
   show heading.where(level: 3): set block(above: 1.25em, below: 0.5em)
 
   // Title page
-  page(margin: 2.5cm, numbering: none)[
+  [
+    #set page(margin: 2.5cm, numbering: none)
+
     #align(center)[
       #if logo != none [
         #logo
       ]
       #text(size: 16pt, weight: "bold")[#tr.university]
-      #if faculty != "" [
+      #if _present(faculty) [
         #v(0.4em)
         #text(size: 14pt, weight: "bold")[#faculty]
       ]
-      #if department != "" [
+      #if _present(department) [
         #v(0.3em)
         #text(size: 12pt)[#department]
       ]
@@ -133,7 +193,7 @@
 
     #align(center)[
       #text(size: 16pt)[#author]
-      #if study-program != "" [
+      #if _present(study-program) [
         #v(0.5em)
         #text(size: 12pt)[#study-program]
       ]
@@ -147,7 +207,7 @@
       [
         #if supervisors.len() > 0 [
           #text(weight: "bold")[
-            #tr.supervisors
+            #if supervisors.len() == 1 [#tr.supervisor] else [#tr.supervisors]
           ]
           #for supervisor in supervisors [
             #linebreak()
@@ -157,111 +217,107 @@
       ],
       [
         #align(right)[
-          #date
+          #_format-date(date, tr)
         ]
       ],
     )
   ]
 
-  // Insert optional assignment and declaration content
-  for content in (assignment, declaration) {
-    if content != none {
-      pagebreak()
-      content
+  [
+    #set page(numbering: "i")
+
+    // Insert assignment and declaration content
+    #for page-content in (assignment, declaration) {
+      if page-content != none {
+        pagebreak()
+        page-content
+      }
     }
-  }
 
-  // Abstracts and keywords
-  pagebreak()
-
-  let abstracts = if lang == "cs" {
-    (
+    // Abstracts and keywords
+    #pagebreak()
+    #let abstracts = (
       (translations.cs, abstract-cs, keywords-cs),
       (translations.en, abstract-en, keywords-en),
     )
-  } else {
-    (
-      (translations.en, abstract-en, keywords-en),
-      (translations.cs, abstract-cs, keywords-cs),
-    )
-  }
+    #if language == "en" { abstracts = abstracts.rev() }
 
-  for (translation, abstract, keywords) in abstracts {
-    heading(level: 1, numbering: none, outlined: false)[
-      #translation.abstract
-    ]
-    abstract
-    v(0.8em)
-    if keywords.len() > 0 [
-      *#translation.keywords:* #keywords.join(", ")
-    ]
-  }
-
-  // Acknowledgements
-  if acknowledgements != "" {
-    pagebreak()
-    heading(level: 1, numbering: none, outlined: false)[
-      #tr.acknowledgements
-    ]
-    acknowledgements
-  }
-
-  // Table of contents
-  pagebreak()
-  outline(title: tr.toc, depth: 3)
-
-  // List of figures
-  if list-of-figures {
-    pagebreak()
-    outline(title: tr.list-of-figures, target: figure.where(kind: image))
-  }
-
-  // List of tables
-  if list-of-tables {
-    pagebreak()
-    outline(title: tr.list-of-tables, target: figure.where(kind: table))
-  }
-
-  // List of abbreviations
-  if list-of-abbreviations.len() > 0 {
-    pagebreak()
-    heading(level: 1, numbering: none, outlined: false)[
-      #tr.list-of-abbreviations
-    ]
-    columns(2, gutter: 5em)[
-      #for (abbreviation, definition) in list-of-abbreviations [
-        #grid(
-          columns: (1fr, 3fr),
-          column-gutter: 1em,
-          [#strong(abbreviation)], [#definition],
-        )
-        #v(0.2em)
+    #for (translation, abstract, keywords) in abstracts {
+      heading(level: 1, outlined: false)[
+        #translation.abstract
       ]
+      abstract
+      v(0.8em)
+      [*#translation.keywords:* #keywords.join(", ")]
+    }
+
+    // Acknowledgements
+    #if _present(acknowledgements) {
+      pagebreak()
+      heading(level: 1, outlined: false)[
+        #tr.acknowledgements
+      ]
+      acknowledgements
+    }
+
+    // Table of contents
+    #pagebreak()
+    #outline(title: tr.toc, depth: 3)
+
+    // List of figures
+    #if list-of-figures {
+      pagebreak()
+      outline(title: tr.list-of-figures, target: figure.where(kind: image))
+    }
+
+    // List of tables
+    #if list-of-tables {
+      pagebreak()
+      outline(title: tr.list-of-tables, target: figure.where(kind: table))
+    }
+
+    // List of abbreviations
+    #if list-of-abbreviations.len() > 0 {
+      pagebreak()
+      heading(level: 1, outlined: false)[
+        #tr.list-of-abbreviations
+      ]
+      columns(2, gutter: 5em)[
+        #for (abbreviation, definition) in list-of-abbreviations [
+          #grid(
+            columns: (1fr, 3fr),
+            column-gutter: 1em,
+            [#strong(abbreviation)], [#definition],
+          )
+          #v(0.2em)
+        ]
+      ]
+    }
+  ]
+
+  [
+    #set page(numbering: "1")
+    #counter(page).update(1)
+
+    // Main document
+    #[
+      #show: _chapters.with("1.1")
+      #pagebreak()
+      #body
     ]
-  }
 
-  // Main document
-  pagebreak()
-  body
+    // Bibliography
+    #if bibliography != none {
+      set std.bibliography(title: tr.bibliography)
+      pagebreak()
+      bibliography
+    }
 
-  // Bibliography
-  if bibliography-file != none {
-    pagebreak()
-    bibliography(
-      bibliography-file,
-      title: tr.bibliography,
-      style: bibliography-style,
-    )
-  }
-
-  // Appendices
-  if appendices != none {
-    pagebreak()
-    heading(level: 1, numbering: none)[#tr.appendices]
-    [
-      #counter(heading).update(0)
-      #set heading(numbering: "A.1")
-      #appendices
-    ]
-  }
+    // Appendices
+    #if appendices != none {
+      counter(heading).update(0)
+      show: _chapters.with("A.1")
+      appendices
+    }
+  ]
 }
