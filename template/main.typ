@@ -1,4 +1,4 @@
-#import "@preview/ctu-thesis:0.1.0": thesis
+#import "@preview/simple-ctu-thesis:0.1.0": thesis
 
 #show: thesis.with(
   thesis-type: "Bachelor's thesis",
@@ -12,6 +12,7 @@
   keywords-en: ("example",),
   abstract-cs: [Tato práce se zabývá jednoduchým příkladem problému a nastiňuje přístup k jeho řešení.],
   keywords-cs: ("příklad",),
+  bibliography: bibliography("refs.bib"),
   appendices: [
     = Supplementary Notes
 
@@ -23,12 +24,17 @@
   ],
 )
 
-= Introduction
+= Introduction <intro>
 
-#lorem(50)
+#lorem(50) @knuth1984
 
 == Goals
 
 #lorem(100)
 
 #lorem(100)
+
+= The problem
+
+#lorem(10)
+See @intro.
