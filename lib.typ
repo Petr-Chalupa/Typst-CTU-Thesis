@@ -169,6 +169,7 @@
     #align(center)[
       #if logo != none [
         #logo
+        #v(0.4em)
       ]
       #text(size: 16pt, weight: "bold")[#tr.university]
       #if _present(faculty) [
@@ -176,7 +177,7 @@
         #text(size: 14pt, weight: "bold")[#faculty]
       ]
       #if _present(department) [
-        #v(0.3em)
+        #v(0.4em)
         #text(size: 12pt)[#department]
       ]
     ]
