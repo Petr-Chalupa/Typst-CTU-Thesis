@@ -63,11 +63,15 @@ All parameters of `thesis()` are optional unless stated otherwise.
 ## Notes
 
 - **Figures, tables and listings** are numbered per chapter (`Figure 1.1`). Table captions are placed above the table. If you render a figure and the autodetect doesn't recognize it, you may force the kind via `kind: image` to be numbered and listed:
+  
   ```typst
   #figure(cetz.canvas(...), kind: image, caption: [...])
   ```
+
 - **Listings** (`raw` figures) can break across pages. They do not appear in any list.
+
 - **The assignment and declaration** can be passed as a PDF. `image()` embeds one page at a time, so for a multi-page PDF use a helper loop and pass the page count:
+  
   ```typst
   #let pdf-pages(path, count) = for p in range(1, count + 1) {
     page(margin: 0pt, image(path, page: p, width: 100%))
@@ -83,7 +87,7 @@ All parameters of `thesis()` are optional unless stated otherwise.
 
 ### Custom figure kind (for example, graphs)
 
-Custom kinds are not handled by the template. Add the wiring in your own after `#show: thesis.with(...)`:
+Custom kinds are not handled by the template. Add the wiring on your own:
 
 ```typst
 #show figure.where(kind: "graph"): set figure(supplement: [Graph])
