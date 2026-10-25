@@ -12,11 +12,28 @@
   keywords-en: ("example",),
   abstract-cs: [Tato práce se zabývá jednoduchým příkladem problému a nastiňuje přístup k jeho řešení.],
   keywords-cs: ("příklad",),
+  acknowledgements: [Thanks to everyone who helped.],
+  list-of-figures: true,
+  list-of-tables: true,
+  list-of-abbreviations: (
+    ("CTU", "Czech Technical University in Prague"),
+    ("FEE", "Faculty of Electrical Engineering"),
+  ),
   bibliography: bibliography("refs.bib"),
   appendices: [
     = Supplementary Notes
 
     Additional details.
+
+    #figure(
+      table(
+        columns: 2,
+        [*Key*], [*Value*],
+        [A], [1],
+        [B], [2],
+      ),
+      caption: [A table in an appendix.],
+    )
 
     = Example Data
 
@@ -34,7 +51,42 @@
 
 #lorem(100)
 
-= The problem
+= Features
 
-#lorem(10)
-See @intro.
+This chapter shows the elements the template numbers per chapter. See @intro for the introduction.
+
+== Figures and tables
+
+#figure(
+  rect(width: 60%, height: 2cm),
+  kind: image,
+  caption: [A placeholder figure.],
+) <fig:example>
+
+#figure(
+  table(
+    columns: 3,
+    [*Name*], [*Value*], [*Unit*],
+    [Voltage], [3.3], [V],
+    [Current], [120], [mA],
+  ),
+  caption: [A small table.],
+) <tab:example>
+
+Both @fig:example and @tab:example restart their numbering in each chapter.
+
+== Code and equations
+
+#figure(
+  ```python
+  def square(x):
+      return x * x
+  ```,
+  caption: [A code listing.],
+) <lst:example>
+
+Equations are numbered per chapter too:
+
+$ E = m c^2 $ <eq:energy>
+
+See @lst:example and @eq:energy and maybe @esp32s3.
