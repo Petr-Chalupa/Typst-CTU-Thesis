@@ -387,6 +387,9 @@
     first-line-indent: 1.5em,
   )
 
+  show heading: it => if it.numbering == none { it } else {
+    block(counter(heading).display(it.numbering) + h(0.5em) + it.body)
+  }
   show heading.where(level: 1): set text(size: 1.65em, weight: "bold")
   show heading.where(level: 1): set block(above: 1.75em, below: 0.75em)
   show heading.where(level: 2): set text(size: 1.3em, weight: "bold")
