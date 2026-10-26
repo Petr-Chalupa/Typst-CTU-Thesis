@@ -148,46 +148,42 @@
   date-text,
 ) = [
   #set page(margin: 2.5cm, numbering: none)
+  #set align(center)
 
-  #align(center)[
-    #if logo != none [
-      #logo
-      #v(0.4em)
-    ]
-    #text(size: 16pt, weight: "bold")[#tr.university]
-    #if _present(faculty) [
-      #v(0.4em)
-      #text(size: 14pt, weight: "bold")[#faculty]
-    ]
-    #if _present(department) [
-      #v(0.4em)
-      #text(size: 12pt)[#department]
-    ]
+  #text(size: 16pt, weight: "bold")[#tr.university]
+  #if _present(faculty) [
+    #v(0.4em)
+    #text(size: 14pt, weight: "bold")[#faculty]
+  ]
+  #if _present(department) [
+    #v(0.4em)
+    #text(size: 12pt)[#department]
   ]
 
   #v(3cm)
 
-  #align(center)[
-    #text(size: 16pt, weight: "bold")[#thesis-type]
-    #v(0.5em)
-    #text(size: 20pt, weight: "bold")[#title]
-  ]
+  #text(size: 16pt, weight: "bold")[#thesis-type]
+  #v(0.5em)
+  #text(size: 20pt, weight: "bold")[#title]
 
   #v(2cm)
 
-  #align(center)[
-    #text(size: 16pt)[#author]
-    #if _present(study-program) [
-      #v(0.5em)
-      #text(size: 12pt)[#study-program]
-    ]
+  #text(size: 16pt)[#author]
+  #if _present(study-program) [
+    #v(0.5em)
+    #text(size: 12pt)[#study-program]
   ]
 
   #v(1fr)
 
+  #if _present(logo) [
+    #logo
+    #v(2fr)
+  ]
+
   #grid(
     columns: (1fr, 1fr),
-    align: bottom,
+    align: (left + bottom, right + bottom),
     [
       #if supervisors.len() > 0 [
         #text(weight: "bold")[
@@ -200,9 +196,7 @@
       ]
     ],
     [
-      #if _present(date-text) [
-        #align(right)[#date-text]
-      ]
+      #if _present(date-text) [#date-text]
     ],
   )
 ]
