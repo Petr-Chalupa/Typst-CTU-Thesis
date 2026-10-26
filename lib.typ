@@ -230,11 +230,17 @@
       a.body
       if a.keywords.len() > 0 {
         v(0.8em)
-        [*#a.tr.keywords:* #a.keywords.join(", ")]
+        [
+          #set par(first-line-indent: 0pt)
+          *#a.tr.keywords:* #a.keywords.join(", ")
+        ]
       }
       if _present(a.title) {
         v(0.8em)
-        [*#a.tr.title:* #a.title]
+        [
+          #set par(first-line-indent: 0pt)
+          *#a.tr.title:* #a.title
+        ]
       }
     }
   }
