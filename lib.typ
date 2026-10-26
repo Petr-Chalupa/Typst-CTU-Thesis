@@ -9,12 +9,14 @@
     supervisors: "Vedoucí práce",
     abstract: "Abstrakt",
     keywords: "Klíčová slova",
+    title: "Název",
     acknowledgements: "Poděkování",
     toc: "Obsah",
     list-of-figures: "Seznam obrázků",
     list-of-tables: "Seznam tabulek",
     list-of-abbreviations: "Seznam zkratek",
     bibliography: "Literatura",
+    region: "CZ",
     months: (
       "leden",
       "únor",
@@ -30,18 +32,49 @@
       "prosinec",
     ),
   ),
+  sk: (
+    university: "ČESKÉ VYSOKÉ UČENIE TECHNICKÉ V PRAHE",
+    supervisor: "Vedúci práce",
+    supervisors: "Vedúci práce",
+    abstract: "Abstrakt",
+    keywords: "Kľúčové slová",
+    title: "Názov",
+    acknowledgements: "Poďakovanie",
+    toc: "Obsah",
+    list-of-figures: "Zoznam obrázkov",
+    list-of-tables: "Zoznam tabuliek",
+    list-of-abbreviations: "Zoznam skratiek",
+    bibliography: "Literatúra",
+    region: "SK",
+    months: (
+      "január",
+      "február",
+      "marec",
+      "apríl",
+      "máj",
+      "jún",
+      "júl",
+      "august",
+      "september",
+      "október",
+      "november",
+      "december",
+    ),
+  ),
   en: (
     university: "CZECH TECHNICAL UNIVERSITY IN PRAGUE",
     supervisor: "Supervisor",
     supervisors: "Supervisors",
     abstract: "Abstract",
     keywords: "Keywords",
+    title: "Title",
     acknowledgements: "Acknowledgements",
     toc: "Contents",
     list-of-figures: "List of Figures",
     list-of-tables: "List of Tables",
     list-of-abbreviations: "List of Abbreviations",
     bibliography: "References",
+    region: "US",
     months: (
       "January",
       "February",
@@ -205,6 +238,10 @@
         v(0.8em)
         [*#a.tr.keywords:* #a.keywords.join(", ")]
       }
+      if _present(a.title) {
+        v(0.8em)
+        [*#a.tr.title:* #a.title]
+      }
     }
   }
 
@@ -275,7 +312,7 @@
   language: "en",
 
   thesis-type: "Thesis type",
-  title: "Title",
+  title: (:),
   author: "Name of the author",
   faculty: none,
   department: none,
@@ -284,10 +321,8 @@
   logo: none,
   date: auto,
 
-  abstract-cs: [],
-  keywords-cs: (),
-  abstract-en: [],
-  keywords-en: (),
+  abstract: (:),
+  keywords: (:),
 
   acknowledgements: none,
 
@@ -303,25 +338,33 @@
 
   body,
 ) = {
-  assert(language in ("cs", "en"), message: "`language` must be \"cs\" or \"en\"")
+  assert(
+    language in translations,
+    message: "`language` must be \"cs\", \"sk\" or \"en\"",
+  )
   let tr = translations.at(language)
 
+  let title-text = title.at(language, default: "Title")
   let supervisors = if type(supervisors) == str { (supervisors,) } else { supervisors }
   let date-text = _format-date(date, tr)
 
   // Only provided abstracts, own language first
-  let abstracts = (
-    (tr: translations.cs, body: abstract-cs, keywords: keywords-cs),
-    (tr: translations.en, body: abstract-en, keywords: keywords-en),
-  ).filter(a => _present(a.body))
-  if language == "en" { abstracts = abstracts.rev() }
+  let order = (language,) + ("cs", "sk", "en").filter(l => l != language)
+  let abstracts = order
+    .filter(l => _present(abstract.at(l, default: none)))
+    .map(l => (
+      tr: translations.at(l),
+      body: abstract.at(l),
+      keywords: keywords.at(l, default: ()),
+      title: if l == language { none } else { title.at(l, default: none) },
+    ))
 
   // Metadata
   set document(
-    title: title,
+    title: title-text,
     author: author,
-    description: author + ": " + title,
-    keywords: keywords-cs + keywords-en,
+    description: author + ": " + title-text,
+    keywords: keywords.values().flatten(),
   )
 
   // Typesetting
@@ -334,7 +377,7 @@
     font: "Libertinus Serif",
     size: 11pt,
     lang: language,
-    region: if language == "cs" { "CZ" } else { "US" },
+    region: tr.region,
   )
 
   set par(
@@ -363,7 +406,7 @@
   _title-page(
     tr,
     thesis-type,
-    title,
+    title-text,
     author,
     faculty,
     department,

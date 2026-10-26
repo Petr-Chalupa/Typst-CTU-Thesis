@@ -2,16 +2,23 @@
 
 #show: thesis.with(
   thesis-type: "Bachelor's thesis",
-  title: "Example Thesis",
+  title: (
+    en: "Example Thesis",
+    cs: "Ukázková práce",
+  ),
   author: "John Doe",
   faculty: "Faculty of Electrical Engineering",
   department: "Department of Cybernetics",
   study-program: "Open Informatics",
   supervisors: ("Dr. Alex Smith",),
-  abstract-en: [This thesis explores a simple example problem and outlines an approach to its solution.],
-  keywords-en: ("example",),
-  abstract-cs: [Tato práce se zabývá jednoduchým příkladem problému a nastiňuje přístup k jeho řešení.],
-  keywords-cs: ("příklad",),
+  abstract: (
+    en: [This thesis explores a simple example problem and outlines an approach to its solution.],
+    cs: [Tato práce se zabývá jednoduchým příkladem problému a nastiňuje přístup k jeho řešení.],
+  ),
+  keywords: (
+    en: ("example",),
+    cs: ("příklad",),
+  ),
   acknowledgements: [Thanks to everyone who helped.],
   list-of-figures: true,
   list-of-tables: true,
