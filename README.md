@@ -101,7 +101,7 @@ Custom kinds are not handled by the template. Add the wiring on your own:
 ### Moving table caption above the table
 
 ```typst
-show figure.where(kind: table): set figure.caption(position: top)
+#show figure.where(kind: table): set figure.caption(position: top)
 ```
 
 ### Boxed code blocks
