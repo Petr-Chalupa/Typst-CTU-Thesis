@@ -98,6 +98,12 @@ Custom kinds are not handled by the template. Add the wiring on your own:
 #outline(title: [List of Graphs], target: figure.where(kind: "graph"))
 ```
 
+### Moving table caption above the table
+
+```typst
+show figure.where(kind: table): set figure.caption(position: top)
+```
+
 ### Boxed code blocks
 
 ```typst

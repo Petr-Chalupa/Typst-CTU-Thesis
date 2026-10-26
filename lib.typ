@@ -392,7 +392,6 @@
 
   set figure(gap: 0.8em)
   show figure: set block(above: 1.5em, below: 1.5em)
-  show figure.where(kind: table): set figure.caption(position: top)
   show figure.where(kind: raw): set align(left)
   show figure.where(kind: raw): set block(breakable: true)
 
