@@ -62,7 +62,7 @@ All parameters of `thesis()` are optional unless stated otherwise.
 
 ## Notes
 
-- **Figures, tables and listings** are numbered per chapter (`Figure 1.1`). Table captions are placed above the table. If you render a figure and the autodetect doesn't recognize it, you may force the kind via `kind: image` to be numbered and listed:
+- **Figures, tables and listings** are numbered per chapter (`Figure 1.1`). If you render a figure and the autodetect doesn't recognize it, you may force the kind via `kind: image` to be numbered and listed:
 
   ```typst
   #figure(cetz.canvas(...), kind: image, caption: [...])
