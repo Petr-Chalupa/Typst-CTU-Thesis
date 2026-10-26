@@ -35,7 +35,7 @@ All parameters of `thesis()` are optional unless stated otherwise.
 | `department`    | `str`, `content`                  | `none`                 |                                                                                                                                                     |
 | `study-program` | `str`, `content`                  | `none`                 |                                                                                                                                                     |
 | `supervisors`   | `array` of `str`, or `str`        | `()`                   | Label is singular or plural automatically                                                                                                           |
-| `logo`          | `content`                         | `none`                 | Any content shown above the university name, e.g. `image("logo.svg", width: 5cm)` or a `grid` of several logos                                      |
+| `logo`          | `content`                         | `none`                 | E.g. `image("logo.svg", width: 5cm)`                                                                                                                |
 | `date`          | `auto`, `datetime`, `str`, `none` | `auto`                 | `auto` is today (changes on every compile). A `datetime` is shown as "Month Year" in the document language. A `str` is shown as is. `none` hides it |
 
 ### Front matter
